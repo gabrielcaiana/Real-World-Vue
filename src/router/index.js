@@ -11,9 +11,10 @@ const routes = [
   },
 
   {
-    path: "/event",
+    path: "/event/:id",
     name: "event-show",
-    component: () => import("../views/EventShow")
+    component: () => import("../views/EventShow"),
+		props: true
   },
 
   {
