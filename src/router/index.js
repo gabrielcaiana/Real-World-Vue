@@ -21,7 +21,12 @@ const routes = [
     path: "/event/create",
     name: "event-create",
     component: () => import("../views/EventCreate")
-  }
+  },
+
+	{
+		path: '*',
+		component: () => import("../views/NotFound") 
+	}
 ];
 
 const router = new VueRouter({
