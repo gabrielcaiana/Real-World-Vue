@@ -1,5 +1,8 @@
 <template>
-  <div class="icon-wrapper" v-html="svg"></div>
+  <div class="icon-wrapper">
+    <svg v-html="svg" class="icon" :width="width" :height="height" />
+    <slot></slot>
+  </div>
 </template>
 
 <script>
@@ -14,7 +17,7 @@ export default {
     height: {
       type: [Number, String],
       default: 24,
-    },
+    }
   },
   computed: {
     svg() {
@@ -29,19 +32,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.4);
-  font-size: 1rem;
-  font-weight: 600;
-}
-.icon {
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-  margin-right: 6px;
-}
+	.icon-wrapper {
+		display: flex;
+		align-items: center;
+	}
+
+	.icon {
+		margin-right: 8px;
+	}
 </style>
