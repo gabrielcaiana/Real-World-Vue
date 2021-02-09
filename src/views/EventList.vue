@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import EventService from '@/services/EventService'
 import EventCard from "@/components/EventCard";
 export default {
   components: {
@@ -19,14 +19,12 @@ export default {
   }),
 
   created() {
-    axios
-      .get("http://localhost:3000/events")
-      .then((response) => {
-        this.events = response.data;
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+   EventService.getEvents()
+	 .then(response => {
+		 this.events = response.data
+	 }).catch(err => {
+		 console.log(err)
+	 })
   },
 };
 </script>
