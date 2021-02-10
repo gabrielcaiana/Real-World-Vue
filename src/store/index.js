@@ -24,6 +24,10 @@ const state = {
 const mutations = {
 	ADD_EVENT(state, payload) {
 		state.events.push(payload)
+	},
+
+	SET_EVENTS(state, payload) {
+		state.events = payload
 	}
 }
 
@@ -35,7 +39,17 @@ const actions = {
 		}).catch((err) => {
 			console.log(err)
 		})
+	},
+
+	fetchEvents({commit}) {
+		EventService.getEvents()
+	 .then(response => {
+		 commit('SET_EVENTS', response.data)
+	 }).catch(err => {
+		 console.log(err)
+	 })
 	}
+	
 }
 
 export default new Vuex.Store({
