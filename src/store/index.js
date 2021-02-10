@@ -19,6 +19,7 @@ const state = {
     "community"
   ],
 	events: [],
+	event: {},
 	eventsTotal: 0
 }
 
@@ -29,6 +30,10 @@ const mutations = {
 
 	SET_EVENTS(state, payload) {
 		state.events = payload
+	},
+
+	SET_EVENT(state, payload) {
+		state.event = payload
 	},
 
 	SET_EVENTSTOTAL(state, payload) {
@@ -56,10 +61,17 @@ const actions = {
 	 })
 	},
 
+	fetchEvent({commit}, id) {
+		EventService.getEventgit(id)
+		.then(response => {
+			commit('SET_EVENT', response.data)
+			console.log(response.data)
+		}).catch(err => console.log(err))
+	},
+
 	totalPages({commit}) {
 		EventService.getEvents()
 		.then((response) => {
-			console.log(response.data.length)
 			return commit('SET_EVENTSTOTAL', parseInt(response.data.length))
 		}).catch(err => console.log(err))
 	}
