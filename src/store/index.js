@@ -61,12 +61,19 @@ const actions = {
 	 })
 	},
 
-	fetchEvent({commit}, id) {
-		EventService.getEventgit(id)
-		.then(response => {
-			commit('SET_EVENT', response.data)
-			console.log(response.data)
-		}).catch(err => console.log(err))
+	fetchEvent({commit, getters}, id) {
+
+		let event = getters.getEventById(id)
+
+		if(event) {
+			commit('SET_EVENT', event)
+		}else {
+			EventService.getEventgit(id)
+			.then(response => {
+				commit('SET_EVENT', response.data)
+				console.log(response.data)
+			}).catch(err => console.log(err))
+		}
 	},
 
 	totalPages({commit}) {
@@ -77,9 +84,16 @@ const actions = {
 	}
 }
 
+const getters = {
+	getEventById: state => id => {
+		return state.events.find(event => event.id === id)
+	}
+}
+
 export default new Vuex.Store({
   state,
   mutations,
   actions,
+	getters,
   modules: {}
 });
