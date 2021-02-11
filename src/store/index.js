@@ -1,14 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import EventService from '@/services/EventService'
+import * as user from './modules/user'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const state = {
-  user: {
-    id: "abc123",
-    name: "Gabriel Caiana"
-  },
+ 
   categories: [
     "sustainability",
     "nature",
@@ -95,5 +93,7 @@ export default new Vuex.Store({
   mutations,
   actions,
 	getters,
-  modules: {}
+  modules: {
+		user
+	}
 });
