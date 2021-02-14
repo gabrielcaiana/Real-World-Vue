@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import * as user from './modules/user'
 import * as event from './modules/event'
+import * as notification from './modules/notifications'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   state,
   modules: {
 		user,
-		event
+		event,
+		notification
 	}
 });

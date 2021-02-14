@@ -36,7 +36,7 @@ export const actions = {
 		})
 	},
 
-	fetchEvents({ commit }, { perPage, page }) {
+	fetchEvents({ commit, dispatch }, { perPage, page }) {
 		EventService.getEvents(perPage, page).then(response => {
 				commit(
 					'SET_EVENTS_TOTAL',
@@ -45,7 +45,11 @@ export const actions = {
 				commit('SET_EVENTS', response.data)
 			})
 			.catch(error => {
-				console.log('There was an error:', error.response)
+				const notification = {
+					type: 'error',
+					message: `There as a problem fetching events: ${error.message}`
+				}
+				dispatch('notification/add', notification, {root: true})
 			})
 	},
 
