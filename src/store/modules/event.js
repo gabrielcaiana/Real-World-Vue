@@ -21,7 +21,7 @@ export const mutations = {
 		state.event = payload
 	},
 
-	SET_EVENTSTOTAL(state, payload) {
+	SET_EVENTS_TOTAL(state, payload) {
 		state.eventsTotal = payload
 	}
 }
@@ -29,22 +29,24 @@ export const mutations = {
 export const actions = {
 	createEvent({ commit, rootState  }, payload) { // (params context) rootState, rootGetters -> access global 
 		console.log(`User creating Event is ${rootState.user.user.name}`)
-		return EventService.postEvent(payload)
-		.then(() => {
-			commit('ADD_EVENT', payload.data)
+		return EventService.postEvent(payload).then(() => {
+			commit('ADD_EVENT', payload)
 		}).catch((err) => {
 			console.log(err)
 		})
 	},
 
-	fetchEvents({commit}, {perPage, page}) {
-		EventService.getEvents(perPage, page)
-	 .then(response => {
-		 commit('SET_EVENTS', response.data)
-		 console.log(`Total events are ${response.headers['x-total-count']}`)
-	 }).catch(err => {
-		 console.log(err)
-	 })
+	fetchEvents({ commit }, { perPage, page }) {
+		EventService.getEvents(perPage, page).then(response => {
+				commit(
+					'SET_EVENTS_TOTAL',
+					parseInt(response.headers['x-total-count'])
+				)
+				commit('SET_EVENTS', response.data)
+			})
+			.catch(error => {
+				console.log('There was an error:', error.response)
+			})
 	},
 
 	fetchEvent({commit, getters}, id) {
@@ -61,13 +63,6 @@ export const actions = {
 			}).catch(err => console.log(err))
 		}
 	},
-
-	totalPages({commit}) {
-		EventService.getEvents()
-		.then((response) => {
-			return commit('SET_EVENTSTOTAL', parseInt(response.data.length))
-		}).catch(err => console.log(err))
-	}
 }
 
 export const getters = {
