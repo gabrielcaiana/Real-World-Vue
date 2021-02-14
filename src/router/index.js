@@ -9,7 +9,8 @@ const routes = [
   {
     path: "/",
     name: "event-list",
-    component: () => import("../views/EventList")
+    component: () => import("../views/EventList"),
+		props: true
   },
 
   {

@@ -413,6 +413,20 @@
       "date": "2021-02-08T17:01:00.000Z",
       "time": "8:00",
       "attendees": []
+    },
+    {
+      "id": 8429488,
+      "category": "food",
+      "organizer": {
+        "id": "abc123",
+        "name": "Gabriel"
+      },
+      "title": "efef",
+      "description": "",
+      "location": "",
+      "date": "",
+      "time": "",
+      "attendees": []
     }
   ]
 }
