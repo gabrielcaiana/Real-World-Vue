@@ -2,10 +2,12 @@
   <div>
     <h1>Create Event</h1>
     <form @submit.prevent="createEvent">
-      <label>Select a category</label>
-      <select v-model="event.category">
-        <option v-for="cat in categories" :key="cat">{{ cat }}</option>
-      </select>
+      <base-select
+				 label="Select a category"
+				 v-model="event.category"
+				 :options="categories"
+			/>
+
       <h3>Name & describe your event</h3>
 
       <BaseInput
@@ -44,8 +46,9 @@
           <option v-for="time in times" :key="time">{{ time }}</option>
         </select>
       </div>
-			
-      <input type="submit" class="button -fill-gradient" value="Submit" />
+
+			<base-button type="submit" buttonClass="-fill-gradient">Submit</base-button>
+      <!-- <input type="submit" class="button -fill-gradient" value="Submit" /> -->
     </form>
   </div>
 </template>
@@ -54,10 +57,14 @@
 import Datepicker from "vuejs-datepicker";
 import NProgress from "nprogress";
 import BaseInput from "../components/BaseInput.vue";
+import BaseSelect from '../components/BaseSelect.vue';
+import BaseButton from '../components/BaseButton.vue';
 export default {
   components: {
     Datepicker,
     BaseInput,
+		BaseSelect,
+		BaseButton
   },
   data() {
     const times = [];
@@ -72,14 +79,14 @@ export default {
   },
   methods: {
     createEvent() {
-      this.$store.dispatch("event/createEvent", this.event);
       NProgress.start()
+      this.$store.dispatch("event/createEvent", this.event)
         .then(() => {
           this.$router.push({
             name: "event-show",
             params: { id: this.event.id },
           });
-          this.event = this.createFreshEvent();
+					this.event = this.createFreshEvent();
         })
         .catch(() => {
           NProgress.done();
