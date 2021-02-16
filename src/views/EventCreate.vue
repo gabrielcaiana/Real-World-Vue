@@ -7,42 +7,44 @@
         <option v-for="cat in categories" :key="cat">{{ cat }}</option>
       </select>
       <h3>Name & describe your event</h3>
-      <div class="field">
-        <label>Title</label>
-        <input
-          v-model="event.title"
-          type="text"
-          placeholder="Add an event title"
-        />
-      </div>
-      <div class="field">
-        <label>Description</label>
-        <input
-          v-model="event.description"
-          type="text"
-          placeholder="Add a description"
-        />
-      </div>
+
+      <BaseInput
+        label="Title"
+        v-model="event.title"
+        type="text"
+        placeholder="Add an event title"
+      />
+
+      <BaseInput
+        label="Description"
+        v-model="event.description"
+        type="text"
+        placeholder="Add a description"
+      />
+
       <h3>Where is your event?</h3>
-      <div class="field">
-        <label>Location</label>
-        <input
-          v-model="event.location"
-          type="text"
-          placeholder="Add a location"
-        />
-      </div>
+
+      <BaseInput
+        label="Location"
+        v-model="event.location"
+        type="text"
+        placeholder="Add a location"
+      />
+
       <h3>When is your event?</h3>
+
       <div class="field">
         <label>Date</label>
         <datepicker v-model="event.date" placeholder="Select a date" />
       </div>
+
       <div class="field">
         <label>Select a time</label>
         <select v-model="event.time">
           <option v-for="time in times" :key="time">{{ time }}</option>
         </select>
       </div>
+			
       <input type="submit" class="button -fill-gradient" value="Submit" />
     </form>
   </div>
@@ -50,10 +52,12 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
-import NProgress from 'nprogress'
+import NProgress from "nprogress";
+import BaseInput from "../components/BaseInput.vue";
 export default {
   components: {
     Datepicker,
+    BaseInput,
   },
   data() {
     const times = [];
@@ -67,19 +71,20 @@ export default {
     };
   },
   methods: {
-		createEvent() {
-			this.$store.dispatch('event/createEvent', this.event)
-			NProgress.start()
-			.then(() => {
-				this.$router.push({
-					name: 'event-show',
-					params:  { id: this.event.id }
-				})
-				this.event = this.createFreshEvent()
-			}).catch(() => {
-				NProgress.done()
-			})
-		},
+    createEvent() {
+      this.$store.dispatch("event/createEvent", this.event);
+      NProgress.start()
+        .then(() => {
+          this.$router.push({
+            name: "event-show",
+            params: { id: this.event.id },
+          });
+          this.event = this.createFreshEvent();
+        })
+        .catch(() => {
+          NProgress.done();
+        });
+    },
 
     createFreshEvent() {
       const user = this.$store.state.user.user;

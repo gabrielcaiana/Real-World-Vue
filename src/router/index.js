@@ -23,18 +23,39 @@ const routes = [
 				routeTo.params.event = event
 				next()
 			})
+			.catch((error) => {
+				if(error.response && error.response.status == 404) {
+					next({name: '404', params: {resource: 'event'} })
+				}else {
+					next({name: 'network-issue'})
+				}
+			})
 		}
   },
 
   {
     path: "/event/create",
     name: "event-create",
-    component: () => import("../views/EventCreate")
+    component: () => import("../views/EventCreate"),
   },
 
 	{
+		path: '/network-issue',
+		name: 'network-issue',
+		component: () => import("../views/NetworkIssue")
+	},
+
+	{
+		path: '/404',
+		name: '404',
+		component: () => import("../views/NotFound"),
+		props: true
+
+	},
+
+	{
 		path: '*',
-		component: () => import("../views/NotFound") 
+		redirect: {name: '404', params: {resource: 'page' }}
 	}
 ];
 
