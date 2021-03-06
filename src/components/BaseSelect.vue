@@ -26,10 +26,10 @@ export default {
     label: {
       type: String,
     },
-
+    
     value: {
-      type: [String, Number],
-    },
+      required: true
+    }
   },
 
   methods: {

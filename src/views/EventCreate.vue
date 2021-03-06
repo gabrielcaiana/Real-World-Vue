@@ -2,12 +2,13 @@
   <div>
     <h1>Create Event</h1>
     <form @submit.prevent="createEvent">
-      <base-select
-				 label="Select a category"
-				 v-model="event.category"
-				 :options="categories"
-			/>
+     <BaseSelect
+      label="Select a category"
+      :options="categories"
+      v-model="event.category"
+    />
 
+    
       <h3>Name & describe your event</h3>
 
       <BaseInput
@@ -59,6 +60,7 @@ import NProgress from "nprogress";
 import BaseInput from "../components/BaseInput.vue";
 import BaseSelect from '../components/BaseSelect.vue';
 import BaseButton from '../components/BaseButton.vue';
+
 export default {
   components: {
     Datepicker,
@@ -77,6 +79,7 @@ export default {
       categories: this.$store.state.categories,
     };
   },
+
   methods: {
     createEvent() {
       NProgress.start()
